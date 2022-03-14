@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Music Web</title>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <link rel="stylesheet" href="music.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="navbar">
+      <img src="media/logo.png" class="logo">
+      <ul>
+        <li><a href="#">HOME</a></li>
+        <li><a href="#">SPECIFICATION</a></li>
+        <li><a href="#">PRODUCTS</a></li>
+        <li><a href="#">CONNECT</a></li>
+        <li>
+          <p id="signin">SIGN IN</p>
+        </li>
+        <li>
+          <p id="signup">SIGN UP</p>
+        </li>
+      </ul>
+    </div>
+    <div id="md_si" class="contain_modal_si">
+      <div class="modal_si animate">
+        <form>
+          <span class="close" onclick="document.getElementById('md_si').style.display='none'">&times;</span>
+          <label for="name_si">Name/Email</label>
+          <input id="name_si" placeholder="Enter Your Username/Email" type="text" required>
+          <label for="pass_si">Password</label>
+          <input id="pass_si" type="password" placeholder="Enter Your Password" required>
+          <button id="si" type="submit">Sign In</button>
+        </form>
+      </div>
+    </div>
+    <div id="md_su" class="contain_modal_su">
+      <div class="modal_su animate">
+        <form>
+          <span class="close" onclick="document.getElementById('md_su').style.display='none'">&times;</span>
+          <label for="name_su">Name/Email</label>
+          <input id="name_su" placeholder="Enter Your Username/Email" type="text" required>
+          <label for="pass_su">Password</label>
+          <input id="pass_su" type="password" placeholder="Enter Your Password" required>
+          <label for="re_pass">Repeat Password</label>
+          <input id="re_pass" placeholder="Repeat Your Password" type="password" required>
+          <button id="su" type="submit">Sign Up</button>
+        </form>
+      </div>
+    </div>
+    <div class="content">
+      <div class="left-col">
+        <h1>THE<br>REAL<br>SOUND</h1>
+      </div>
+      <div class="right-col">
+        <s-list class="music" name="hey"></s-list>
+        <s-list class="music" name="ukulele"></s-list>
+        <s-list class="music" name="summer"></s-list>
+        <s-list class="music" name="Holiday"></s-list>
+        <s-list class="music" name="7Rings"></s-list>
+        <s-list class="music" name="BadHabits"></s-list>
+        <s-list class="music" name="BuildABitch"></s-list>
+        <s-list class="music" name="CureForMe"></s-list>
+        <s-list class="music" name="Dejavu"></s-list>
+        <s-list class="music" name="DojaCat"></s-list>
+        <s-list class="music" name="DoubleTake"></s-list>
+        <s-list class="music" name="DuskTillDawn"></s-list>
+        <s-list class="music" name="EasyOnMe"></s-list>
+        <s-list class="music" name="Happier"></s-list>
+        <s-list class="music" name="IndustryBaby"></s-list>
+        <s-list class="music" name="Inferno"></s-list>
+        <s-list class="music" name="LikeMyFather"></s-list>
+        <s-list class="music" name="LoveMeLikeYouDo"></s-list>
+        <s-list class="music" name="MyUniverse"></s-list>
+        <s-list class="music" name="Peaches"></s-list>
+        <s-list class="music" name="Seorita"></s-list>
+        <s-list class="music" name="Stay"></s-list>
+        <s-list class="music" name="Symphony"></s-list>
+        <s-list class="music" name="ThatGirl"></s-list>
+        <s-list class="music" name="Toxic"></s-list>
+        <s-list class="music" name="Unstoppable"></s-list>
+        <s-list class="music" name="Wolves"></s-list>
+        <s-list class="music" name="YouRight"></s-list>
+        
+
+      </div>
+    </div>
+    <!-- player -->
+    <div class="player-contain" id ="pc">
+      <div class="music-container" id="music-container">
+        <div class="img-container">
+          <img src="images/ukulele.jpg" alt="music-cover" id="cover" />
+        </div>
+        <div class="music-info">
+          <h4 id="title"></h4>
+          <div class="progress-container" id="progress-container">
+            <div class="progress" id="progress"></div>
+          </div>
+        </div>
+    
+        
+        <audio controls src="music/ukulele.mp3" id="audio"></audio>
+        <div class="navigation">
+          <button id="prev" class="action-btn">
+            <i class="fas fa-backward"></i>
+          </button>
+          <button id="play" class="action-btn action-btn-big">
+            <i class="fas fa-play"></i>
+          </button>
+          <button id="next" class="action-btn">
+            <i class="fas fa-forward"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- player -->
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyDYneAfkvQJBIOo1WMtuK02rTmmA-kogOg",
+        authDomain: "music-list-57e24.firebaseapp.com",
+        projectId: "music-list-57e24",
+        storageBucket: "music-list-57e24.appspot.com",
+        messagingSenderId: "456412866134",
+        appId: "1:456412866134:web:7236d78c29142461dffdf7",
+        measurementId: "G-P5CJBEPLLM"
+      };
+      // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+       
+    </script>
+
+    </script>
+    <script src="./components/firebase.js"> </script>
+    <script src="./music.js"></script>
+    <script type="module" src="./app.js"></script>
+
+</body>
+
+</html>
